@@ -43,10 +43,13 @@ public class ProductService {
         return productDtoRepository.save(productDto);
     }
 
-    public boolean delete(int productId) {
+    public boolean delete(int productId, int userId) {
         return getProduct(productId).map(productDto -> {
-            productDtoRepository.delete(productId);
-            return true;
+            if (productDto.getUserId() == userId) {
+                productDtoRepository.delete(productId);
+                return true;
+            }
+            return false;
         }).orElse(false);
     }
 
