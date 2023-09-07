@@ -23,7 +23,23 @@ public class ProductService {
         return productDtoRepository.getProduct(productId);
     }
 
-    public ProductDto save(ProductDto productDto) {
+    public Optional<List<ProductDto>> getByName(String name) {
+        return productDtoRepository.getByName(name);
+    }
+
+    public Optional<ProductDto> update(ProductDto productDto) {
+        boolean isProduct = Boolean.TRUE.equals(productDtoRepository.getProduct(productDto.getProductId())
+                .map(productDto1 -> true)
+                .orElse(null));
+
+        if (isProduct) {
+            return productDtoRepository.update(productDto);
+        }
+        return Optional.empty();
+
+    }
+
+    public Optional<ProductDto> save(ProductDto productDto) {
         return productDtoRepository.save(productDto);
     }
 

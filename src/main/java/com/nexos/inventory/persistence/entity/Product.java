@@ -13,6 +13,7 @@ public class Product {
     @Column(name = "id")
     private Integer productId;
 
+    @Column(name = "name", unique = true, nullable = false)
     private String name;
 
     private Integer quantity;

@@ -8,6 +8,7 @@ import com.nexos.inventory.persistence.mapper.ProductMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,9 +33,33 @@ public class ProductRepository implements ProductDtoRepository {
     }
 
     @Override
-    public ProductDto save(ProductDto productDto) {
+    public Optional<ProductDto> update(ProductDto productDto) {
         Product product = mapper.toProduct(productDto);
-        return null;
+        return Optional.of(mapper.toProductDto(productCrudRepository.save(product)));
+    }
+
+    @Override
+    public Optional<List<ProductDto>> getByName(String name) {
+        List<Product> products = productCrudRepository.findByNameContainingIgnoreCase(name);
+        return Optional.of(mapper.toProductsDto(products));
+    }
+
+    @Override
+    public Optional<ProductDto> save(ProductDto productDto) {
+        Date dateCurrent = new Date();
+
+        Date productDate = productDto.getRegistrationDate();
+
+        if (productDate.equals(dateCurrent) || productDate.before(dateCurrent)){
+            Product product = mapper.toProduct(productDto);
+            try {
+                return Optional.of(mapper.toProductDto(productCrudRepository.save(product)));
+            }
+            catch(Exception e) {
+                return Optional.empty();
+            }
+        }
+        return Optional.empty();
     }
 
     @Override

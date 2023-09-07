@@ -10,7 +10,11 @@ public interface ProductDtoRepository {
 
     Optional<ProductDto> getProduct(Integer productId);
 
-    ProductDto save(ProductDto productDto);
+    Optional<ProductDto> update(ProductDto productDto);
+
+    Optional<List<ProductDto>> getByName(String name);
+
+    Optional<ProductDto> save(ProductDto productDto);
 
     void delete(Integer productId);
 }

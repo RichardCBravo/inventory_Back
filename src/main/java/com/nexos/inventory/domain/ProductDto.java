@@ -8,17 +8,17 @@ import jakarta.persistence.Id;
 import java.util.Date;
 
 public class ProductDto {
-    private Long productId;
+    private int productId;
     private String name;
-    private Integer quantity;
+    private int quantity;
     private Date registrationDate;
-    private long userId;
+    private int userId;
 
-    public Long getProductId() {
+    public int getProductId() {
         return productId;
     }
 
-    public void setProductId(Long productId) {
+    public void setProductId(int productId) {
         this.productId = productId;
     }
 
@@ -30,11 +30,11 @@ public class ProductDto {
         this.name = name;
     }
 
-    public Integer getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
@@ -46,11 +46,11 @@ public class ProductDto {
         this.registrationDate = registrationDate;
     }
 
-    public long getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 }

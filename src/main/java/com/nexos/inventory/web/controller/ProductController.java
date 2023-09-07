@@ -6,9 +6,7 @@ import com.nexos.inventory.domain.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,6 +20,41 @@ public class ProductController {
     @GetMapping("/all")
     public ResponseEntity<List<ProductDto>>  getAll() {
         return new ResponseEntity<>(productService.getAll(), HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductDto> getProduct(@PathVariable("id") int productId) {
+        return productService.getProduct(productId)
+                .map(productDto -> new ResponseEntity<>(productDto, HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @PostMapping("/new")
+    public ResponseEntity<ProductDto> save(@RequestBody ProductDto productDto){
+        return productService.save(productDto)
+                .map(productDto1 -> new ResponseEntity<>(productDto1, HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.CONFLICT));
+    }
+
+    @PutMapping("/update") ResponseEntity<ProductDto> update(@RequestBody ProductDto productDto) {
+        return productService.update(productDto)
+                .map(productDto1 -> new ResponseEntity<>(productDto1, HttpStatus.ACCEPTED))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity delete(@PathVariable("id") int productId) {
+        if(productService.delete(productId)) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("/name")
+    public ResponseEntity getName(@RequestParam("value") String name) {
+        return productService.getByName(name)
+                .map(productDtos -> new ResponseEntity<>(productDtos, HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
 }
