@@ -24,6 +24,10 @@ public class Product {
     @Column(name = "user_id")
     private Integer userId;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    private User user;
+
     public Integer getProductId() {
         return productId;
     }
@@ -54,6 +58,14 @@ public class Product {
 
     public void setRegistrationDate(Date registrationDate) {
         this.registrationDate = registrationDate;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Integer getUserId() {

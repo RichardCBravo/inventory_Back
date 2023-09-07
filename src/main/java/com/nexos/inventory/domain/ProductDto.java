@@ -1,5 +1,6 @@
 package com.nexos.inventory.domain;
 
+import com.nexos.inventory.persistence.entity.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,7 +13,9 @@ public class ProductDto {
     private String name;
     private int quantity;
     private Date registrationDate;
+
     private int userId;
+    private UserDto user;
 
     public int getProductId() {
         return productId;
@@ -44,6 +47,14 @@ public class ProductDto {
 
     public void setRegistrationDate(Date registrationDate) {
         this.registrationDate = registrationDate;
+    }
+
+    public UserDto getUser() {
+        return user;
+    }
+
+    public void setUser(UserDto user) {
+        this.user = user;
     }
 
     public int getUserId() {
